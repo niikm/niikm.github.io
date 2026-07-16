@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nikhil Marella — Cybersecurity Portfolio</title>
+<style>
+  :root{
+    --bg: #0a0e14;
+    --bg-panel: #10161f;
+    --line: #1e2733;
+    --ink: #cbd5df;
+    --ink-dim: #7c8a9a;
+    --accent: #5eead4;
+    --accent-dim: #2d9d8f;
+    --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background:
+      linear-gradient(180deg, rgba(94,234,212,0.03), transparent 300px),
+      var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    * { animation: none !important; transition: none !important; }
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap{ max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position: sticky; top:0; z-index: 10;
+    background: rgba(10,14,20,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding: 16px 24px; }
+  .brand{ font-family: var(--mono); font-size: 14px; color: var(--ink); letter-spacing: 0.02em; }
+  .brand span{ color: var(--accent); }
+  .nav-links{ display:flex; gap: 24px; font-family: var(--mono); font-size: 13px; }
+  .nav-links a{ color: var(--ink-dim); }
+  .nav-links a:hover{ color: var(--accent); text-decoration: none; }
+
+  /* ---------- Hero ---------- */
+  header.hero{ padding: 96px 0 72px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+  .eyebrow{
+    font-family: var(--mono); font-size: 12px; color: var(--accent-dim);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px;
+    display:flex; align-items:center; gap: 10px;
+  }
+  .eyebrow::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background: var(--accent); box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+
+  h1{
+    font-family: var(--sans); font-weight: 700; font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.15; margin: 0 0 16px; color: #eef2f6; letter-spacing: -0.01em;
+  }
+  h1 .type{ color: var(--accent); }
+
+  .lede{ font-size: 17px; color: var(--ink-dim); max-width: 560px; margin: 0 0 32px; }
+
+  .cta-row{ display:flex; gap: 14px; flex-wrap: wrap; }
+  .btn{
+    font-family: var(--mono); font-size: 13px; padding: 11px 18px;
+    border-radius: 6px; border: 1px solid var(--line); display:inline-flex; align-items:center; gap:8px;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+  .btn:hover{ text-decoration:none; transform: translateY(-1px); }
+  .btn.primary{ background: var(--accent); color: #06231e; border-color: var(--accent); font-weight: 600; }
+  .btn.primary:hover{ background: #7ff3de; }
+  .btn.ghost{ color: var(--ink); }
+  .btn.ghost:hover{ border-color: var(--accent-dim); color: var(--accent); }
+
+  /* ---------- Sections ---------- */
+  section{ padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .section-head{ display:flex; align-items:baseline; gap: 12px; margin-bottom: 28px; }
+  .section-head .idx{ font-family: var(--mono); color: var(--accent-dim); font-size: 13px; }
+  .section-head h2{ font-size: 20px; margin:0; color:#eef2f6; }
+
+  /* Focus areas */
+  .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card{
+    background: var(--bg-panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 20px; transition: border-color 0.15s ease;
+  }
+  .card:hover{ border-color: var(--accent-dim); }
+  .card .tag{ font-family: var(--mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; }
+  .card h3{ font-size: 15px; margin: 10px 0 8px; color: #eef2f6; }
+  .card p{ font-size: 13.5px; color: var(--ink-dim); margin: 0; }
+
+  /* Toolchain */
+  .chips{ display:flex; flex-wrap: wrap; gap: 10px; }
+  .chip{
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink);
+    background: var(--bg-panel); border: 1px solid var(--line);
+    padding: 7px 12px; border-radius: 5px;
+  }
+
+  /* Log / about */
+  .log{ font-family: var(--mono); font-size: 13px; color: var(--ink-dim); background: var(--bg-panel);
+    border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; }
+  .log p{ margin: 0 0 6px; }
+  .log p:last-child{ margin-bottom:0; }
+  .log .k{ color: var(--accent-dim); }
+
+  /* Footer */
+  footer{ padding: 40px 0 60px; }
+  footer .wrap{ display:flex; align-items:center; justify-content:space-between; flex-wrap: wrap; gap: 12px; }
+  .foot-links{ display:flex; gap: 20px; font-family: var(--mono); font-size: 13px; }
+  .foot-note{ font-family: var(--mono); font-size: 12px; color: var(--ink-dim); }
+
+  @media (max-width: 720px){
+    .grid{ grid-template-columns: 1fr; }
+    .nav-links{ display:none; }
+    header.hero{ padding: 64px 0 48px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">niikm<span>@</span>portfolio<span>:~$</span></div>
+    <div class="nav-links">
+      <a href="#focus">focus</a>
+      <a href="#toolchain">toolchain</a>
+      <a href="#about">about</a>
+      <a href="resume.pdf">resume</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">status: actively building</div>
+    <h1>Nikhil Marella <span class="type">// Cybersecurity Portfolio</span></h1>
+    <p class="lede">
+      IT Service Desk Analyst moving toward SOC Analyst / Security Engineer work.
+      This site tracks hands-on labs, detections, and projects — homelab experiments,
+      not vendor buzzwords.
+    </p>
+    <div class="cta-row">
+      <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">↓ View Resume</a>
+      <a class="btn ghost" href="https://github.com/niikm" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn ghost" href="#focus">See projects</a>
+    </div>
+  </div>
+</header>
+
+<section id="focus">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">01</span><h2>Focus Areas</h2></div>
+    <div class="grid">
+      <div class="card">
+        <div class="tag">Detection & SIEM</div>
+        <h3>Azure Honeynet</h3>
+        <p>Microsoft Sentinel + Log Analytics for SOC-style detection practice — alerting, KQL, and triage on live attack telemetry.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Offensive Security</div>
+        <h3>VulnHub Labs</h3>
+        <p>Recon, exploitation, and privilege escalation on isolated targets — Kali on Proxmox, working through Basic Pentesting and beyond.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Infrastructure</div>
+        <h3>Segmented Cyber Range</h3>
+        <p>pfSense, Wazuh, DVWA, and Metasploitable across a segmented LAN/DMZ topology built for repeatable, safe testing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="toolchain">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">02</span><h2>Toolchain</h2></div>
+    <div class="chips">
+      <span class="chip">Microsoft Sentinel</span>
+      <span class="chip">KQL</span>
+      <span class="chip">Wazuh</span>
+      <span class="chip">Metasploit</span>
+      <span class="chip">Nmap</span>
+      <span class="chip">pfSense</span>
+      <span class="chip">Active Directory</span>
+      <span class="chip">Entra ID</span>
+      <span class="chip">Intune</span>
+      <span class="chip">Proxmox</span>
+      <span class="chip">Trellix EDR</span>
+      <span class="chip">Rapid7</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">03</span><h2>About</h2></div>
+    <div class="log">
+      <p><span class="k">role&gt;</span> IT Service Desk Analyst I, Corus Entertainment</p>
+      <p><span class="k">certs&gt;</span> CompTIA Security+, SC-900 · CySA+ in progress</p>
+      <p><span class="k">background&gt;</span> Centennial College — Computer Systems Technician, Networking</p>
+      <p><span class="k">currently&gt;</span> building detections, breaking (my own) VMs, chasing a SOC seat</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="resume.pdf">Resume</a>
+      <a href="https://github.com/niikm" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="foot-note">niikm.github.io</div>
+  </div>
+</footer>
+
+</body>
+</html>
